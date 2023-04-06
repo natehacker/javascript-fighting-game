@@ -6,7 +6,7 @@ canvas.height =576
 c.fillRect(0,0,canvas.width,canvas.height)
 
 
-const gravity = 0.2
+const gravity = 0.3
 
 class Sprite {
     constructor({position, velcoity}){
@@ -51,20 +51,59 @@ velcoity:{
 })
 
 console.log(player)
+const keys = {
+    a:{
+        pressed:false
+    },
+    d:{
+        pressed:false
+    }
+}
+let lastkey;
 
 function animate (){
     window.requestAnimationFrame(animate)
     c.fillStyle = "black"
     c.fillRect(0,0,canvas.width, canvas.height)
 player.update()
-enemy.update()
+
+player.velcoity.x = 0
+
+
+if(keys.a.pressed && lastkey === 'a'){
+player.velcoity.x= -1
+}else if (keys.d.pressed && lastkey === 'd'){
+    player.velcoity.x = 1
 }
+}
+
 animate()
 window.addEventListener('keydown',(event)=>{
     switch(event.key){
         case 'd':
-        player.velcoity.x = 1
+            keys.d.pressed = true 
+            lastkey ='d'
+        break 
+        case 'a':
+       keys.a.pressed = true
+       lastkey ='a' 
         break
+        case 'w':
+        keys.w.pressed = true
+        lastkey ='w' 
+         break
+    }
+console.log(event)
+})
+window.addEventListener('keyup',(event)=>{
+    switch(event.key){
+        case 'd':
+            keys.d.pressed = false
+        break
+        case 'a':
+           keys.a.pressed = false
+            break
+            
     }
 console.log(event)
 })
